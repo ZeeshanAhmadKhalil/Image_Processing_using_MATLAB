@@ -1,0 +1,16 @@
+function[bw]=ls1_im2bw(original,th1,th2)
+[~,~,com]=size(original);
+original1=original;
+if(com>1)
+    original=self_rgb2gray(original);
+end
+bw=original;
+if(th1<=th2)
+    bw(original<=th1)=0;
+    bw(original>th2)=1;
+    bw=mat2gray(bw);
+    subplot(1,2,1),imshow(original1),title('original'),subplot(1,2,2),imshow(bw),title('Transformed');
+else
+    msgbox('th1~<=th2');
+end
+end

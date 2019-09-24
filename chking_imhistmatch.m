@@ -1,0 +1,12 @@
+I=imread('225x310 wowed baby.png');
+ref=imread('280x335 laughing baby.png');
+I=rgb2gray(I);
+ref=rgb2gray(ref);
+J=imhistmatch(I,ref);
+bin=30;
+subplot(3,2,1),imhist(I,bin),title('Input Histogram');
+subplot(3,2,2),imshow(I),title('Input image');
+subplot(3,2,3),imhist(ref,bin),title('Refarance Histogram');
+subplot(3,2,4),imshow(ref),title('Refarance image');
+subplot(3,2,5),imhist(J,bin),title('output Histogram');
+subplot(3,2,6),imshow(J),title('output image');

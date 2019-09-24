@@ -1,0 +1,32 @@
+function[ndp_values,ndp_locations]=ndp(matrix,point)
+x=point(1);
+y=point(2);
+[r,c]=size(matrix);
+ndp_locations={[]};
+if(x~=1&&y~=1)
+    ndp1=matrix(x-1,y-1);
+    ndp_locations=horzcat(ndp_locations,[x-1,y-1]);
+else
+    ndp1=[];
+end
+if(x~=1&&y~=c)
+    ndp2=matrix(x-1,y+1);
+    ndp_locations=horzcat(ndp_locations,[x-1,y+1]);
+else
+    ndp2=[];
+end
+if(x~=r&&y~=c)
+    ndp3=matrix(x+1,y+1);
+    ndp_locations=horzcat(ndp_locations,[x+1,y+1]);
+else
+    ndp3=[];
+end
+if(x~=r&&y~=1)
+    ndp4=matrix(x+1,y-1);
+    ndp_locations=horzcat(ndp_locations,[x+1,y-1]);
+else
+    ndp4=[];
+end
+ndp_locations=ndp_locations(~cellfun('isempty',ndp_locations));
+ndp_values=[ndp1,ndp2,ndp3,ndp4];
+end

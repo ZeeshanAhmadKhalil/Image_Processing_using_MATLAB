@@ -1,0 +1,14 @@
+%  f=[1 2 3;
+%    4 5 6;
+%    7 8 9];
+f=imread('450x340 two man wearing black cote.png');
+f=rgb2gray(f);
+domain=[1 1 1;
+        1 1 1;
+        1 1 1];
+g_min=ordfilt2(f,1,domain);
+g_max=ordfilt2(f,sum(domain(:)),domain);
+g_median=ordfilt2(f,(sum(domain(:))+1)/2,domain);
+figure(1),imshow(g_min);
+figure(2),imshow(g_max);
+figure(3),imshow(g_median);

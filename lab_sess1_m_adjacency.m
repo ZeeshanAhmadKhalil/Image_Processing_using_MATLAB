@@ -1,0 +1,24 @@
+function[boolean]=lab_sess1_m_adjacency(matrix,p,q,v)
+x=p(1);
+y=p(2);
+s=q(1);
+t=q(2);
+boolean=false;
+if(lab_sess1_find_in_array(v,matrix(x,y))&&lab_sess1_find_in_array(v,matrix(s,t)))
+    [~,loc_n4p]=lab_sess1_n4p(matrix,p);
+    [~,loc_ndp]=lab_sess1_ndp(matrix,p);
+    if(lab_sess1_find_in_cell(loc_n4p,q))
+        boolean=true;
+    elseif(lab_sess1_find_in_cell(loc_ndp,q))
+        if(y>t)
+            y=y-1;
+            t=t+1;
+        elseif(t>y)
+            t=t-1;
+            y=y+1;
+        end
+        if(~lab_sess1_find_in_array(v,matrix(x,y))&&~lab_sess1_find_in_array(v,matrix(s,t)))
+            boolean=true;
+        end
+    end
+end

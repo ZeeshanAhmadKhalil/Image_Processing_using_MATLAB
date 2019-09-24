@@ -1,0 +1,9 @@
+function[loged]=ls1_explore_dark(original)
+original=double(original);
+loged=log(original+1);
+loged=mat2gray(loged);
+loged=10.^(loged+1);
+loged=mat2gray(loged);
+original=mat2gray(original);
+subplot(1,2,1),imshow(original),title('original'),subplot(1,2,2),imshow(loged),title('Transformed');
+end

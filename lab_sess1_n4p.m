@@ -1,0 +1,23 @@
+function[val,loc]=lab_sess1_n4p(matrix,p)
+x=p(1);
+y=p(2);
+[r,c]=size(matrix);
+val=[];
+loc={};
+if(x~=1)
+    val=horzcat(val,matrix(x-1,y));
+    loc=horzcat(loc,[x-1,y]);
+end
+if(x~=r)
+    val=horzcat(val,matrix(x+1,y));
+    loc=horzcat(loc,[x+1,y]);
+end
+if(y~=1)
+    val=horzcat(val,matrix(x,y-1));
+    loc=horzcat(loc,[x,y-1]);
+end
+if(y~=c)
+    val=horzcat(val,matrix(x,y+1));
+    loc=horzcat(loc,[x,y+1]);
+end
+end

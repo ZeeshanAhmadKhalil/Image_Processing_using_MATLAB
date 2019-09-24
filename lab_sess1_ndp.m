@@ -1,0 +1,23 @@
+function[val,loc]=lab_sess1_ndp(matrix,p)
+x=p(1);
+y=p(2);
+[r,c]=size(matrix);
+val=[];
+loc={};
+if(x~=1&&y~=1)
+    val=horzcat(val,matrix(x-1,y-1));
+    loc=horzcat(loc,[x-1,y-1]);
+end
+if(x~=r&&y~=c)
+    val=horzcat(val,matrix(x+1,y+1));
+    loc=horzcat(loc,[x+1,y+1]);
+end
+if(y~=1&&x~=r)
+    val=horzcat(val,matrix(x+1,y-1));
+    loc=horzcat(loc,[x+1,y-1]);
+end
+if(y~=c&&x~=1)
+    val=horzcat(val,matrix(x-1,y+1));
+    loc=horzcat(loc,[x-1,y+1]);
+end
+end

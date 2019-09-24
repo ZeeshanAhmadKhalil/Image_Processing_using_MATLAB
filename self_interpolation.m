@@ -1,0 +1,19 @@
+function out=self_interpolation(in,out_size)
+R_=out_size(1);
+C_=out_size(2);
+[R,C]=size(in);
+Sc=C/C_;
+Sr=R/R_;
+r_=meshgrid(1:R_,1)
+c_=meshgrid(1:C_,1)
+rf=Sr*r_;
+cf=Sc*c_;
+ro=floor(rf);
+co=floor(cf);
+ro(ro<1)=1;
+co(co<1)=1;
+ro(ro>=R_)=R_-1;
+co(co>=C_)=C_-1;
+del_r=rf-ro;
+del_c=cf-co;
+end

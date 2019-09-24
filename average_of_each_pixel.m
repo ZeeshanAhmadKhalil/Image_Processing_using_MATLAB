@@ -1,0 +1,54 @@
+function[average_image]=average_of_each_pixel(in_image,mask)
+[r1,c1]=size(mask);
+[r,c,com]=size(in_image);
+if(r1==3&&c1==3&&com==1)
+    in_image=double(in_image);
+    average_image=rand(r,c,com);
+    for x=1:r
+        for y=1:c
+            k=1;
+            [val,~]=lab_sess1_n8p(in_image,[x,y]);
+            sum1=mask(2,2)*in_image(x,y);
+            if(x~=1)
+                sum1=sum1+mask(1,2)*val(k);
+                k=k+1;
+            end
+            if(x~=r)
+                sum1=sum1+mask(3,2)*val(k);
+                k=k+1;
+            end
+            if(y~=1)
+                sum1=sum1+mask(2,1)*val(k);
+                k=k+1;
+            end
+            if(y~=c)
+                sum1=sum1+mask(2,3)*val(k);
+                k=k+1;
+            end
+            if(y~=1&&x~=1)
+                sum1=sum1+mask(1,1)*val(k);
+                k=k+1;
+            end
+            if(y~=c&&x~=r)
+                sum1=sum1+mask(3,3)*val(k);
+                k=k+1;
+            end
+            if(y~=1&&x~=r)
+                sum1=sum1+mask(1,1)*val(k);
+                k=k+1;
+            end
+            if(y~=c&&x~=1)
+                sum1=sum1+mask(1,3)*val(k);
+            end
+            avg=sum1/sum(mask(:));
+            average_image(x,y)=avg;
+        end
+    end
+    average_image=mat2gray(average_image);
+    in_image=uint8(in_image);
+    subplot(1,2,1),imshow(in_image),title('Original'),subplot(1,2,2),imshow(average_image),title('Transformed');
+else
+    msgbox('E R R O R!!! Mask should be 3x3 so that we can give weight to neighbours OR image is rgb');
+    average_image=[];
+end
+end

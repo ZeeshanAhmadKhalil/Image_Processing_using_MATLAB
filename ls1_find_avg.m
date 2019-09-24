@@ -1,0 +1,54 @@
+function[averaged]=ls1_find_avg(in_image,mask)
+in_image=double(in_image);
+[r,c,com]=size(in_image);
+[r1,c1]=size(mask);
+averaged=rand(r,c);
+if(com==1&&r1==3&&c1==3)
+    for x=1:r
+        for y=1:c
+            k=1;
+            sum1=in_image(x,y);
+            [val,~]=lab_sess1_n8p(in_image,[x,y]);
+            if(x~=1)
+                sum1=sum1+mask(1,2)*val(k);
+                k=k+1;
+            end;
+            if(x~=r)
+                sum1=sum1+mask(3,2)*val(k);
+                k=k+1;
+            end;
+            if(y~=1)
+                sum1=sum1+mask(2,1)*val(k);
+                k=k+1;
+            end;
+            if(y~=c)
+                sum1=sum1+mask(2,3)*val(k);
+                k=k+1;
+            end;
+            if(x~=1&&y~=1)
+                sum1=sum1+mask(1,1)*val(k);
+                k=k+1;
+            end;
+            if(x~=r&&y~=c)
+                sum1=sum1+mask(3,3)*val(k);
+                k=k+1;
+            end;
+            if(x~=1&&y~=c)
+                sum1=sum1+mask(3,1)*val(k);
+                k=k+1;
+            end;
+            if(x~=r&&y~=1)
+                sum1=sum1+mask(1,3)*val(k);
+            end;
+            avg=sum1/sum(mask(:));
+            averaged(x,y)=avg;
+        end
+    end
+    in_image=mat2gray(in_image);
+    averaged=mat2gray(averaged);
+    subplot(1,2,1),imshow(in_image),title('original'),subplot(1,2,2),imshow(averaged),title('Transformed');
+else
+    averaged=[];
+    msgbox('ERROR! the image is rgb OR mask is not 3x3');
+end
+end

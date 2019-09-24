@@ -1,0 +1,71 @@
+clc;
+clear;
+close all;
+%% Problem Definition
+model=CreateModel();
+CostFunction=@(tour) TourLength(tour,model);
+no_of_points=model.n;
+%% ACO Parameters
+MaxIt=100;      % Maximum Number of Iterations
+ants=5;        % Number of Ants (Population Size
+Q=1;
+initial_phromone=10*Q/(no_of_points*mean(model.D(:)));	% Initial Phromone
+alpha=1;        % Phromone Exponential Weight
+beta=1;         % Heuristic Exponential Weight
+evaporation_factor=0.05;       % Evaporation Rate
+%% Initialization
+visibility=1./model.D;             % Heuristic Information Matrix
+phromone=initial_phromone*ones(no_of_points,no_of_points);   % Phromone Matrix
+BestCost=zeros(MaxIt,1);    % Array to Hold Best Cost Values
+% Empty Ant
+empty_ant.Tour=[];
+empty_ant.Cost=[];
+% Ant Colony Matrix
+ant=repmat(empty_ant,ants,1);
+% Best Ant
+BestSol.Cost=inf;
+%% ACO Main Loop
+for it=1:MaxIt
+    % Move Ants
+    for k=1:ants
+        ant(k).Tour=randi([1 no_of_points]);
+        for point=2:no_of_points
+            i=ant(k).Tour(end);
+            P=phromone(i,:).^alpha.*visibility(i,:).^beta;
+            P(ant(k).Tour)=0;
+            P=P/sum(P);
+            j=RouletteWheelSelection(P);
+            ant(k).Tour=[ant(k).Tour j];
+        end
+        ant(k).Cost=CostFunction(ant(k).Tour);
+        if ant(k).Cost<BestSol.Cost
+            BestSol=ant(k);
+        end
+    end
+    % Update Phromones
+    for k=1:ants 
+        tour=ant(k).Tour;
+        tour=[tour tour(1)]; %#ok
+        for point=1:no_of_points
+            i=tour(point);
+            j=tour(point+1);
+            phromone(i,j)=phromone(i,j)+Q/ant(k).Cost;
+        end
+    end
+    % Evaporation
+    phromone=(1-evaporation_factor)*phromone;
+    % Store Best Cost
+    BestCost(it)=BestSol.Cost;
+    % Show Iteration Information
+    disp(['Iteration ' num2str(it) ': Best Cost = ' num2str(BestCost(it))]);
+    % Plot Solution
+    figure(1);
+    PlotSolution(BestSol.Tour,model);
+    pause(0.01);
+end
+%% Results
+figure;
+plot(BestCost,'LineWidth',2);
+xlabel('Iteration');
+ylabel('Best Cost');
+grid on;

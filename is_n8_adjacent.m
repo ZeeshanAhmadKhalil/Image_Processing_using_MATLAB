@@ -1,0 +1,16 @@
+function[boolean]=is_n8_adjacent(matrix,p,q,v)
+x=p(1);
+y=p(2);
+s=q(1);
+t=q(2);
+if(find_in_array(v,matrix(x,y))==true&&find_in_array(v,matrix(s,t))==true)
+    [val,loc]=n8p(matrix,[x,y]);
+    if(find_in_cell(loc,[s,t])==true)
+        boolean=true;
+    else
+        boolean=false;
+    end
+else
+    boolean=false;
+end
+end

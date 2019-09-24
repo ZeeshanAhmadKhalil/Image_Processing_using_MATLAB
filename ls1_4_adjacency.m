@@ -1,0 +1,9 @@
+function[boolean]=ls1_4_adjacency(matrix,p,q,v)
+boolean=false;
+if(~isempty(intersect(matrix(p(1),p(2)),v))&&~isempty(intersect(matrix(q(1),q(2)),v)))
+    [~,D4,~]=ls1_distances(p,q);
+    if(D4==1)
+        boolean=true;
+    end
+end
+end

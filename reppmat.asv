@@ -1,0 +1,8 @@
+% A=[1 2;3 4];
+% [m,n]=size(A);
+% for i=1:n
+% B = repmat(A(:,1),[1 2])
+% end
+face=imread('255x175 coloured face.png');
+bw_face=rgb2gray(face);
+double_face=repnat(bw_face(:,))

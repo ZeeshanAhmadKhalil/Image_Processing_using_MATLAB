@@ -1,0 +1,9 @@
+function[De,D4,D8]=ls1_distances(p,q)
+x=p(1);
+y=p(2);
+s=q(1);
+t=q(2);
+De=sqrt((x-s)^2+(y-t)^2);
+D4=abs(x-s)+abs(y-t);
+D8=max(abs(x-s),abs(y-t));
+end

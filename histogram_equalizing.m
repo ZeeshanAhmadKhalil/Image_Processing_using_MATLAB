@@ -1,0 +1,34 @@
+image=imread('255x175 coloured face.png');
+image=rgb2gray(image);
+% image=[10 5 5 250
+%     150 200 5 200;
+%     10 250 250 5;
+%     10 200 200 200];
+image=uint8(image);
+equalized=histeq(image,256);
+bin=30;
+% figure,imshow(image),figure,imshow(image1)
+subplot(2,3,1),imhist(image,bin),title('original');
+subplot(2,3,2),imshow(image),title('original image');
+subplot(2,3,4),imhist(equalized,bin),title('equalized');
+subplot(2,3,5),imshow(equalized),title('equalized image');
+hnorm=imhist(equalized)./numel(equalized);
+cdf=cumsum(hnorm);
+x=linspace(0,1,256);
+subplot(2,3,6),plot(cdf,x);
+axis([0 1 0 1]);
+set(gca,'xtick',0:.2:1);
+set(gca,'ytick',0:.2:1);
+xlabel('intensity input values','fontsize',11);
+ylabel('intensity output values','fontsize',11);
+title('intensity values');
+hnorm1=imhist(image)./numel(image);
+cdf=cumsum(hnorm1);
+x=linspace(0,1,256);
+subplot(2,3,3),plot(cdf,x);
+axis([0 1 0 1]);
+set(gca,'xtick',0:.2:1);
+set(gca,'ytick',0:.2:1);
+xlabel('intensity input values','fontsize',11);
+ylabel('intensity output values','fontsize',11);
+title('intensity values');

@@ -1,0 +1,10 @@
+ f=[1 2 3;
+   4 5 6;
+   7 8 9];
+% f=imread('450x340 two man wearing black cote.png');
+% f=rgb2gray(f);
+F=fft2(f);
+Fc=fftshift(F);
+Sc=abs(Fc);
+Sc=(1+log(Sc));
+% imshow(S,[]);
